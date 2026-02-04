@@ -1,5 +1,5 @@
 // show databases
-use('aula')
+// use('aula')
 
 // db.people.insertOne({
 //     name: "thais",
@@ -74,15 +74,56 @@ use('aula')
 
 // db.people.find({ salary: {$gte: 2} }, { name: 1, lastname: 1})
 
-db.people.updateOne(
-    { _id: ObjectId('6981f6f2efa1e741c627cf51') },
-    { $set: { name: "alterado"} }
-)
+// db.people.updateOne(
+//     { _id: ObjectId('6981f6f2efa1e741c627cf51') },
+//     { $set: { name: "alterado"} }
+// )
 
-db.people.updateMany(
-    { salary: 5 },
-    { $set: { salary: 12345} }
-)
+// db.people.updateMany(
+//     { salary: 5 },
+//     { $set: { salary: 12345} }
+// )
 
-db.people.deleteMany({ name: /b/ })
+// db.people.deleteMany({ name: /b/ })
 
+use('lista_telefonica')
+
+const cadastros = [
+    {
+    name: "thais",
+    telefone: 1234,
+    email: "thais@gmail.com",
+    cidade: "cwb",
+    dataCasdastro: Date
+    },
+    {
+    name: "beca",
+    telefone: 5678,
+    email: "beca@gmail.com",
+    cidade: "cwb",
+    dataCasdastro: Date
+    },
+    {
+    name: "helo",
+    telefone: 9123,
+    email: "helo@gmail.com",
+    cidade: "campo largo",
+    dataCasdastro: Date
+    },
+    {
+    name: "fehfito",
+    telefone: 4567,
+    email: "fehfito@gmail.com",
+    cidade: "araucaria",
+    dataCasdastro: Date
+    },
+    {
+    name: "kety",
+    telefone: 8912,
+    email: "kety@gmail.com",
+    cidade: "cwb",
+    dataCasdastro: Date
+    }
+]
+
+db.contatos.insertMany(cadastros)
