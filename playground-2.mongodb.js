@@ -42,6 +42,10 @@ const cadastros = [
 
 // db.contatos.find({ name: /^t/i })
 
-db.contatos.find({ telefone: /^9/ })
+// db.contatos.find({ telefone: /^9/ })
 
-db.contatos.find({ email: /gmail.com/ })
+// db.contatos.find({ email: /"gmail.com"/ })
+
+// db.contatos.find({ cidade: "cwb" })
+
+// db.contatos.find({ dataCasdastro: { $gte: } })
