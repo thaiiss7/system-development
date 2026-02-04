@@ -127,3 +127,5 @@ const cadastros = [
 ]
 
 db.contatos.insertMany(cadastros)
+
+db.people.find({ name: /^a/ })
