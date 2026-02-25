@@ -49,7 +49,7 @@ router
     })
 
 // acessar usuarios por id
-.get('/usuarios/:id', (req: Request, res: Response) => {
+.get('/usuarios/id/:id', (req: Request, res: Response) => {
         const { id } = req.params
         let convertedId = Number(id)
 
@@ -64,9 +64,10 @@ router
 
 //atualizar todos os dados de um usuario
 .put('/usuarios/:id', (req: Request, res: Response) => {
+        const { id } = req.params   
+
         const user = people.find((u) => u.id == Number(id))
 
-        const { id } = req.params
         const {nome, email, tipo} = req.body
         const newId = id
         const newDate = user?.createdAt
@@ -93,5 +94,36 @@ router
 
         res.status(200).send({ response: `atualizando o usuario ${id}` })
     })
+
+// atualizar nome
+.patch('/usuarios/nome/:id', (req: Request, res: Response) => {
+    const { id } = req.params
+    const { nome } = req.body
+
+    const user = people.find((u) => u.id == Number(id))
+
+    if (user) {
+        user.nome = nome
+    } else {
+        return res.status(404).send({ response: "usuario não encontrado" })
+    }
+
+    res.status(200).send({ response: `atualizando o usuario ${id}` })
+})
+
+.delete('/usuarios/:id', (req: Request, res: Response) => {
+    const { id } = req.params
+    
+    const user = people.find((u) => u.id == Number(id))
+
+    if (user) {
+        const index = people.findIndex((u) => u.id === Number(id))
+        people.splice(index, 1)
+    } else {
+        return res.status(404).send({ response: "usuario não encontrado" })
+    }
+
+    res.status(200).send({ response: `removendo o usuario ${id}` })
+})
 
 export default router;
