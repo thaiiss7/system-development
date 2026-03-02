@@ -40,7 +40,12 @@ class PersonController {
 
         try {
             const user = await Person.findByIdAndUpdate(id, {name, age})
+
+            if (!user){
+                res.status(404).send({message: `usuario não encontrado`})
+            }
             res.status(200).send({ response: `atualizando o usuario ${id} -> ${name}` })
+        
         } catch (e) {
             res.status(400).send({message: `erro`, e})
         }
