@@ -1,5 +1,5 @@
 import express, { Request, response, Response, Router } from 'express';
-import Product from '../models/Product.js';
+import Product from '../models/Product.ts';
 import ProductController from '../controllers/ProductController.ts';
 import { validateRegister, validateUpdate } from '../midllewares/productMidlleware.ts';
 
