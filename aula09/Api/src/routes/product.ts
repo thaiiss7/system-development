@@ -13,10 +13,11 @@ router
     // .put('/atualizar/:id', validateUpdate, PersonController.updateUsers)
     // .delete('/deletar/:id', PersonController.deleteUsers)
 
-    .post('/products', validateRegister, ProductController.create)
-    .get('/products', ProductController.findAll)
-    .get('/products/:id', ProductController.findById)
-    .put('/products/:id', validateUpdate, ProductController.update)
-    .delete('/products/:id', ProductController.remove)
+    .post('/create', validateRegister, ProductController.create)
+    .get('/find', ProductController.find)
+    .get('/findAll', ProductController.findAll)
+    .get('/find/:id', ProductController.findById)
+    .put('/update/:id', validateUpdate, ProductController.update)
+    .delete('/delete/:id', ProductController.remove)
     
 export default router;

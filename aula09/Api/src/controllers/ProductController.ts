@@ -4,9 +4,10 @@ import Product from '../models/Product.ts';
 class ProductController {
     static async create(req: Request, res: Response){
         const { name, description, price, stock, category } = req.body
+        const createdAt = new Date()
         
         try {
-            const product = new Product({ name, description, price, stock, category })
+            const product = new Product({ name, description, price, stock, category, createdAt })
             await product.save()
 
             res.status(200).send({ message: `produto cadastrado`})
@@ -15,15 +16,26 @@ class ProductController {
         }
     }
 
+    static async find(req: Request, res: Response){
+
+        const products = await Product.find()
+
+        res.status(200).send({ response: products })
+    }
+
     static async findAll(req: Request, res: Response){
-        const { name, category, minPrice, maxPrice, inStock } = req.query
+        const { name, category, minPrice, maxPrice } = req.query
+        const convertedMinPrice = Number(minPrice)
+        const convertedMaxPrice = Number(maxPrice)
 
         const products = await Product.find({
-            name: name,
-            category: category
+            name: name, 
+            category: category,
+            price: { $gte: convertedMinPrice, $lte: convertedMaxPrice },
+            stock: { $gte: 0 }
         })
 
-        res.status(200).send({ message: `fazendo get no servidor` })
+        res.status(200).send({ response: products })
     }
 
     static async findById(req: Request, res: Response){

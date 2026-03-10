@@ -6,13 +6,13 @@ import cors from 'cors';
 const app = express();
 const port = 8080;
 
-connectDB()
-
-routes(app)
-
 app.use(cors({
     origin: '*'
 }))
+
+connectDB()
+
+routes(app)
 
 app.get('/', (req, res) => {
     res.status(200).send({response: "Api funcionando"})
