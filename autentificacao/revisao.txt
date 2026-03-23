@@ -1,0 +1,15 @@
+HTTP
+* post: {body}
+* get: {params}
+* put: {body, params}
+* delete: {params}
+
+ESTRUTURA
+-> src
+    - middlewares: valida as requisiçôes -> next()
+    - routes: caminhos da api
+    - controllers: regra de negócio
+    - database: conaxão com o bd
+    - models: estrutura os dados
+    - server.ts: inicializa a api
+
