@@ -1,51 +1,49 @@
-import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
-import axios from "axios"
-import './Login.css'
+import { useEffect, useState } from 'react'
+import './Register.css'
 import Swal from 'sweetalert2'
+import axios from 'axios'
 
-export const Login = () => {
+export const Register = () => {
+    const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    const navigate = useNavigate()
 
-    const handleLogin = async () => {
-        try {
-            const response = await axios.post('http://localhost:8080/api/auth/login', { email, password })
-            sessionStorage.setItem('token', response.data.token)
-
+    const handleRegister = async () => {
+        try{
+            await axios.post('http://localhost:8080/api/auth/register', {name, email, password})
             Swal.fire({
                 title: 'Sucesso!',
-                text: "login efetuado com suecsso!",
+                text: "usuario registrado!",
                 icon: "success"
             });
 
-            return navigate('/home')
+            return navigate('/login')
 
-        } catch(e) {
+        } catch (e) {
             Swal.fire({
                 title: 'Erro!',
                 text: `${e}`,
                 icon: "error"
             })
         }
+        setName(""),
+        setEmail(""),
+        setPassword("")
     }
 
-    return (
+    return(
         <>
             <div className="body">
                 <div className="register">
                     <div className='form'>
-                        <h2>Login</h2>
+                        <h2>Register</h2>
+                        <input onChange={(e) => setName(e.target.value)} type="text" placeholder="name"/>
                         <input onChange={(e) => setEmail(e.target.value)} type="email" placeholder="email"/>
                         <input onChange={(e) => setPassword(e.target.value)} type="password" placeholder="password"/>
-                        <button onClick={handleLogin}>Login</button>
+                        <button onClick={handleRegister}>Register</button>
                     </div>
                 </div>
             </div>
         </>
     )
-
 }
-
-export default Login
