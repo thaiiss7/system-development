@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"
 import axios from "axios"
 import './Login.css'
 import Swal from 'sweetalert2'
+import { Link } from "react-router-dom"
 
 export const Login = () => {
     const [email, setEmail] = useState("")
@@ -34,12 +35,14 @@ export const Login = () => {
     return (
         <>
             <div className="body">
-                <div className="register">
                     <div className='form'>
                         <h2>Login</h2>
                         <input onChange={(e) => setEmail(e.target.value)} type="email" placeholder="email"/>
                         <input onChange={(e) => setPassword(e.target.value)} type="password" placeholder="password"/>
                         <button onClick={handleLogin}>Login</button>
+                        <div className='register-navigate'>
+                            <p>Don't have an account?</p>
+                            <Link to='/'>Register</Link>
                     </div>
                 </div>
             </div>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import './Register.css'
 import Swal from 'sweetalert2'
 import axios from 'axios'
@@ -34,16 +35,20 @@ export const Register = () => {
     return(
         <>
             <div className="body">
-                <div className="register">
-                    <div className='form'>
-                        <h2>Register</h2>
-                        <input onChange={(e) => setName(e.target.value)} type="text" placeholder="name"/>
-                        <input onChange={(e) => setEmail(e.target.value)} type="email" placeholder="email"/>
-                        <input onChange={(e) => setPassword(e.target.value)} type="password" placeholder="password"/>
-                        <button onClick={handleRegister}>Register</button>
+                <div className='form'>
+                    <h2>Register</h2>
+                    <input onChange={(e) => setName(e.target.value)} type="text" placeholder="name"/>
+                    <input onChange={(e) => setEmail(e.target.value)} type="email" placeholder="email"/>
+                    <input onChange={(e) => setPassword(e.target.value)} type="password" placeholder="password"/>
+                    <button onClick={handleRegister}>Register</button>
+                    <div className='login-navigate'>
+                        <p>Already have an account?</p>
+                        <Link to='/login'>Login</Link>
                     </div>
                 </div>
             </div>
         </>
     )
 }
+
+export default Register

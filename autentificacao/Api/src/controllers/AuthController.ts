@@ -6,7 +6,7 @@ import CryptoJS from 'crypto-js';
 
 dotenv.config();
 
-class AuthController {
+class      AuthController {
 static async register(req: Request, res: Response): Promise<any> {
     const { name, email, password } = req.body;
     console.log(name,email,password)

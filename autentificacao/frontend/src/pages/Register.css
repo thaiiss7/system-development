@@ -35,3 +35,10 @@ button {
     margin: 1rem;
     border-radius: .5rem;
 }
+
+.login-navigate {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+}
