@@ -20,12 +20,28 @@ export const Home = () => {
     }
 
     const deleteProduct = async (_id) => {
-        await axios.delete(`http://localhost:8080/api/product/delete/${_id}`)
-        fetchProducts()
+        Swal.fire({
+            title: 'Deseja realmente deletar?',
+            showConfirmButton: true,
+            showCancelButton: true,
+            confirmButtonText: "Confirmar",
+            cancelButtonText: "Cancelar"
+
+        }).then(async (result) => {
+            if(result.isConfirmed) {
+                try {
+                    await axios.delete(`http://localhost:8080/api/product/delete/${_id}`)
+                    Swal.fire("deletado com sucesso", "", "success")
+                    fetchProducts()
+                } catch {
+                    Swal.fire("erro!", "", "error")
+                }
+            }
+        })
     }
 
     const updateProduct = async (_id) => {
-        return navigate(`/update`)
+        return navigate(`/update/${_id}`)
     }
 
     const createProducts = async () => {

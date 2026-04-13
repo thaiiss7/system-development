@@ -1,18 +1,23 @@
 import axios from "axios"
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import Swal from 'sweetalert2'
+import './Update.css'
 
 export const Update = () => {
 
-    const [products, setProducts] = useState([]);
+    const { id } = useParams();
+    // console.log(id)
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState(0);
     const [stock, setStock] = useState(0);
     const [category, setCategory] = useState("");
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
 
-    const getProductData = async (_id) => {
-        const response = axios.get(`http://localhost:8080/api/product/find/${_id}`)
-        console.log(response.data.response)
+    const getProductData = async (id) => {
+        const response = await axios.get(`http://localhost:8080/api/product/find/${id}`)
+        console.log(response.data)
         setName(response.data.response.name)
         setDescription(response.data.response.description)
         setPrice(response.data.response.price)
@@ -20,36 +25,40 @@ export const Update = () => {
         setCategory(response.data.response.category)
     }
 
-    const update = async (_id) => {
-        try {
-            await axios.post(`http://localhost:8080/api/product/update/${_id}`, {
-                name,
-                description,
-                price,
-                stock,
-                category
-            })
-            Swal.fire({
-                title: 'Sucesso!',
-                text: "usuario registrado!",
-                icon: "success"
-            });  
+    const update = async (id) => {
 
-            fetchProducts()
-        } catch(e) {
-            Swal.fire({
-                title: 'Erro!',
-                text: `${e}`,
-                icon: "error"
-            })
-        }
+        Swal.fire({
+            title: 'Confimar atualização?',
+            showConfirmButton: true,
+            showCancelButton: true,
+            confirmButtonText: "Confirmar",
+            cancelButtonText: "Cancelar"
 
-        setName(""),
-        setDescription(""),
-        setPrice(0),
-        setStock(0),
-        setCategory("")
+        }).then(async (result) => {
+            if(result.isConfirmed) {
+                try {
+                    await axios.put(`http://localhost:8080/api/product/update/${id}`, {
+                        name,
+                        description,
+                        price,
+                        stock,
+                        category
+                    })
+                    Swal.fire("atualizado com sucesso", "", "success")
+                    navigate('/home')
+                } catch(e) {
+                    console.log(e)
+                    Swal.fire("erro!", "", "error")
+                }
+            }
+        })
     }
+
+    useEffect(() => {
+        getProductData(id)
+    },[])
+
+    if (!id) return <p>ID inválido</p>
 
     return(
         <>
@@ -81,7 +90,7 @@ export const Update = () => {
                         <input value={category} placeholder='Type here...' type="text" onChange={(e) => setCategory(e.target.value)}/>
                     </div>
 
-                    <button onClick={update}>Register</button>
+                    <button onClick={() => update(id)}>Update</button>
                 </div>
             </div>
         </>
