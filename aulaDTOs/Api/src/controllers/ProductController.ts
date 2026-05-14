@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import Product from '../models/Product.ts';
-import { registerProductDTO } from "../dtos/productDTO.ts";
-import { register } from "../services/product.service.ts";
+import { findAllProductDTO, registerProductDTO, updateProductDTO } from "../dtos/productDTO.ts";
+import { deleteProduct, findAllProducts, findProduct, register, updateProduct } from "../services/product.service.ts";
 
 class ProductController {
     static async create(req: Request, res: Response){
@@ -17,23 +17,15 @@ class ProductController {
 
     static async find(req: Request, res: Response){
 
-        const products = await Product.find()
+        const products = await findProduct()
 
         return res.status(200).send({ response: products })
     }
 
     static async findAll(req: Request, res: Response){
-        const { name, category, minPrice, maxPrice } = req.query
-        const convertedMinPrice = Number(minPrice)
-        const convertedMaxPrice = Number(maxPrice)
+        const data: findAllProductDTO = req.body
 
-        const products = await Product.find({
-            name: name, 
-            category: category,
-            price: { $gte: convertedMinPrice, $lte: convertedMaxPrice },
-            stock: { $gte: 0 }
-        })
-
+        const products = await findAllProducts(data)
         return res.status(200).send({ response: products })
     }
 
@@ -52,10 +44,10 @@ class ProductController {
 
     static async update(req: Request, res: Response){
         const { id } = req.params
-        const { name, description, price, stock, category } = req.body
+        const data: updateProductDTO = req.body
 
         try {
-            const product = await Product.findByIdAndUpdate(id, { name, description, price, stock, category })
+            const product = await updateProduct(id.toString(), data)
              
             if (!product){
                 res.status(404).send({ message: `produto não encontrado` })
@@ -71,7 +63,7 @@ class ProductController {
         const { id } = req.params
 
         try {
-            const product = await Product.findByIdAndDelete(id)
+            const product = await deleteProduct(id.toString())
 
             if(!product){
                 return res.status(404).send({ message: `produto não encontrado` })
